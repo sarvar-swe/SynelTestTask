@@ -1,0 +1,107 @@
+@model List<SynelTestTask.Models.Employee>
+@* @if (TempData["success"] != null)
+{
+    <h2>@TempData["success"]</h2>
+} *@
+
+<div class="container-fluid m-1">
+    <div class="card-header bg-primary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Employee List</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row pb-3">
+            <div class="col-6 text-start">
+                <form asp-controller="Employee" asp-action="Index" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <input class="form-control" type="file" name="postedFile" required>
+                        </div>
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-primary">Import</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        <div class="col-6">
+        </div>
+    </div>
+        <table id="dataTabel" class="table table-bordered table-striped" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>
+                        Payroll Number
+                    </th>
+                    <th>
+                        Forenames
+                    </th>
+                    <th>
+                        Surname
+                    </th>
+                    <th>
+                        Date of Birth
+                    </th>
+                    <th>
+                        Telephone
+                    </th>
+                    <th>
+                        Mobile
+                    </th>
+                    <th>
+                        Address
+                    </th>
+                    <th>
+                        Address 2
+                    </th>
+                    <th>
+                        Postcode
+                    </th>
+                    <th>
+                        Email Home
+                    </th>
+                    <th>
+                        Start Date
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model is not null)
+                {
+                    @foreach(var emploee in Model.OrderBy(i => i.Surname))
+                    {
+                        <tr>
+                            <td>@emploee.PayrollNumber</td>
+                            <td>@emploee.Forenames</td>
+                            <td>@emploee.Surname</td>
+                            <td>@emploee.DateOfBirth</td>
+                            <td>@emploee.Telephone</td>
+                            <td>@emploee.Mobile</td>
+                            <td>@emploee.Address</td>
+                            <td>@emploee.Address2</td>
+                            <td>@emploee.Postcode</td>
+                            <td>@emploee.EmailHome</td>
+                            <td>@emploee.StartDate</td>
+                            <td>
+                                <div class="w-75 btn-group" role="group">
+                                <a asp-controller="Employee" asp-action="Edit" asp-route-id="@emploee.Id" class="btn btn-primary mx-2">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        new DataTable('#dataTabel');
+    </script>
+}
